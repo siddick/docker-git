@@ -4,7 +4,9 @@ RUN apt-get update && \
     apt-get install language-pack-en curl git openssh-server -y && \
     apt-get clean && \
     mkdir /var/run/sshd && \
-    adduser --system --group --shell /bin/sh git
+    adduser --system --group --shell /bin/sh git && \
+    adduser git sudo && \
+    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 ENV GITOLITE_COMMIT 2417156
 
@@ -16,5 +18,7 @@ VOLUME /home/git
 EXPOSE 22
 
 ADD scripts /scripts
+
+USER git
 
 CMD ["bash", "/scripts/init.sh"]
