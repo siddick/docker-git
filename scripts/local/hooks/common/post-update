@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "Docker build started..."
+
+DATA_DIR=`mktemp -d`
+REPO_DIR=`pwd`
+BRANCH_NAME=`basename $1`
+TAG_NAME=`basename $REPO_DIR .git`:$BRANCH_NAME
+
+git clone $REPO_DIR -b $BRANCH_NAME $DATA_DIR
+sudo docker build -t $TAG_NAME $DATA_DIR
+rm $DATA_DIR -rf
