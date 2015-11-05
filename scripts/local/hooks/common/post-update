@@ -14,6 +14,7 @@ FILES=`find $GL_ADMIN_BASE -name docker-compose.yml | \
 git clone $REPO_DIR -b $BRANCH_NAME $DATA_DIR
 rm $DATA_DIR/.git -rf
 
+# Find Dockerfile
 if [ ! -f $DATA_DIR/Dockerfile ]; then
 	while read line
 	do
@@ -24,7 +25,16 @@ if [ ! -f $DATA_DIR/Dockerfile ]; then
 	done <<<"$FILES"
 fi
 
-sudo docker build -t $TAG_NAME $DATA_DIR
+# Build image
+if [ -f $DATA_DIR/Dockerfile ]; then
+	sudo docker build -t $TAG_NAME $DATA_DIR
+fi
+
+# Restart services
+if [ -f $DATA_DIR/docker-compose.yml ]; then
+  sudo bash -c "cd `dirname $DATA_DIR` && docker-compose up -d"
+fi
+
 rm $DATA_DIR -rf
 
 while read line
