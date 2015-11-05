@@ -1,7 +1,7 @@
 ## Setup git hosting on docker
 
 ```sh
-docker run --name docker-git -d -v /opt/git-home:/home/git -v /usr/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -p 2222:22 siddick/docker-git
+docker run --name docker-git -d -v /opt/git-home:/home/git -v /usr/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v /usr/local/bin/docker-compose:/usr/local/bin/docker-compose -p 2222:22 siddick/docker-git
 ```
 
 ```sh
